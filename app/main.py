@@ -6,16 +6,16 @@ def main():
     print("Logs from your program will appear here!")
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
+    while True:
+        (connection, address) = server_socket.accept()
 
-    (connection, address) = server_socket.accept()
+        redis_server_respone="+PONG\r\n"
 
-    redis_server_respone="+PONG\r\n"
+        data=connection.recv(1024).decode(encoding="utf-8")
+        ping_count=data.count("ping")
 
-    data=connection.recv(1024).decode(encoding="utf-8")
-    ping_count=data.count("ping")
-
-    for i in range(ping_count):
-        connection.send(redis_server_respone.encode())
+        for i in range(ping_count):
+            connection.send(redis_server_respone.encode())
 
 
 if __name__ == "__main__":
