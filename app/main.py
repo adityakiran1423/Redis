@@ -14,6 +14,9 @@ def main():
     data=connection.recv(1024).decode(encoding="utf-8")
     ping_count=data.count("\n")
 
+    if ping_count==0:
+        connection.send(redis_server_respone.encode())
+
     for i in range(ping_count+1):
         connection.send(redis_server_respone.encode())
 
