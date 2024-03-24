@@ -12,12 +12,9 @@ def main():
     redis_server_respone="+PONG\r\n"
 
     data=connection.recv(1024).decode(encoding="utf-8")
-    ping_count=data.count("\n")
+    ping_count=data.count("ping")
 
-    if ping_count==0:
-        connection.send(redis_server_respone.encode())
-
-    for i in range(ping_count+1):
+    for i in range(ping_count):
         connection.send(redis_server_respone.encode())
 
 
