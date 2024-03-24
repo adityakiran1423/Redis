@@ -6,16 +6,20 @@ def main():
     print("Logs from your program will appear here!")
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
+    Error="Error: Expected start of a new RESP value (either +, -, :, $ or *)"
     while True:
-        (connection, address) = server_socket.accept()
+        try:
+            (connection, address) = server_socket.accept()
 
-        redis_server_respone="+PONG\r\n"
+            redis_server_respone="+PONG\r\n"
 
-        data=connection.recv(1024).decode(encoding="utf-8")
-        ping_count=data.count("ping")
+            data=connection.recv(1024).decode(encoding="utf-8")
+            ping_count=data.count("ping")
 
-        for i in range(ping_count):
             connection.send(redis_server_respone.encode())
+
+        except Error:
+            connection.close()
 
 
 if __name__ == "__main__":
