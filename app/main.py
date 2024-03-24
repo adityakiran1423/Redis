@@ -15,12 +15,9 @@ def main():
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
  
     while True:
-        try: 
-            (connection, address) = server_socket.accept()
-            thread=threading.Thread(target=async_redis_server, args=(connection,))
-            thread.start()
-        except BrokenPipeError:
-            break
+        (connection, address) = server_socket.accept()
+        thread=threading.Thread(target=async_redis_server, args=(connection,))
+        thread.start()
 
 
 
