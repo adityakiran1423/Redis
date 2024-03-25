@@ -1,4 +1,12 @@
 import socket
+import threading
+import sys
+
+
+def threaded_redis_server(connection, reddis_pong_response):
+    while True:
+        data=connection.recv(1024).decode(encoding="utf-8")
+        connection.send(reddis_pong_response.encode())
 
 
 def main():
@@ -6,16 +14,15 @@ def main():
     print("Logs from your program will appear here!")
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    (connection, address) = server_socket.accept()
- 
-    while True:
-        try : 
-            redis_server_respone="+PONG\r\n"
-            data=connection.recv(1024).decode(encoding="utf-8")
-            connection.send(redis_server_respone.encode())
-        except BrokenPipeError:
-            break
 
+    # while True:
+    try : 
+        redis_pong_response="+PONG\r\n"
+        (connection, address) = server_socket.accept()
+        thread = threading.Thread(target=threaded_redis_server, args=(connection, redis_pong_response,))
+        thread.start()
+    except BrokenPipeError:
+        sys.exit()
 
 
 if __name__ == "__main__":
