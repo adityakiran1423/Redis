@@ -3,10 +3,10 @@ import threading
 
 
 def resp_parser(request_message) -> str:
-    request_message.replace("\r\n","")
+    # request_message.replace("\r\n","")
     index=request_message.index("$")
-    length_request_message=int(request_message[index+1])
-    echo_message=request_message[index+2:]
+    # length_request_message=int(request_message[index+1])
+    echo_message=request_message[index:]
     return echo_message
 
 
