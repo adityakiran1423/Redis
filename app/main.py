@@ -3,9 +3,8 @@ import threading
 
 
 def resp_parser(request_message) -> str:
-    # request_message.replace("\r\n","")
-    index=request_message.index("$",request_message.index("o"))
-    # length_request_message=int(request_message[index+1])
+    #index=request_message.index("$",request_message.index("o"))
+    index=request_message.rfind("$")
     echo_message=request_message[index:]
     return echo_message
 
