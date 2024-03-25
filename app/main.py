@@ -14,6 +14,8 @@ def threaded_redis_server(connection) -> None:
     while True:
         redis_pong_response="+PONG\r\n"
         data=connection.recv(1024).decode(encoding="utf-8")
+        if data=="*1\r\n$4\r\nping\r\n":
+            connection.send(redis_pong_response.encode())
         echo_message=resp_parser(data)
         connection.send(echo_message.encode())
 
