@@ -15,14 +15,14 @@ def main():
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
 
-    # while True:
-    try : 
-        redis_pong_response="+PONG\r\n"
-        (connection, address) = server_socket.accept()
-        thread = threading.Thread(target=threaded_redis_server, args=(connection, redis_pong_response,))
-        thread.start()
-    except BrokenPipeError:
-        sys.exit()
+    while True:
+        try : 
+            redis_pong_response="+PONG\r\n"
+            (connection, address) = server_socket.accept()
+            thread = threading.Thread(target=threaded_redis_server, args=(connection, redis_pong_response,))
+            thread.start()
+        except BrokenPipeError:
+            sys.exit()
 
 
 if __name__ == "__main__":
