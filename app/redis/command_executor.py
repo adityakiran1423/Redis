@@ -1,7 +1,9 @@
-redis_dictionary={}
+import database
 
 def redis_set(request_message)-> None:
     request_message.replace("\r\n","")
+
+    mode='s'
 
     index1=request_message.index("$")
     index2=request_message.rfind("$")
@@ -10,15 +12,18 @@ def redis_set(request_message)-> None:
             key=request_message[i:index2]
             break
     value=request_message[index2:]
-    redis_dictionary[key]=value
+    _=database(mode, key,value)
+    # redis_dictionary[key]=value
 
 
 def redis_get(request_message) -> str:
     request_message.replace("\r\n","")
+
+    mode='g'
+
     index2=request_message.rfind("$")
     key=request_message[index2:]
     
-    if key in redis_dictionary:
-        return redis_dictionary[key]
-    else:
-        return "$-1\r\n" 
+    value=database(mode, key,"")
+
+    return value
