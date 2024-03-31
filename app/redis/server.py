@@ -19,7 +19,7 @@ def threaded_redis_server(connection) -> None:
             print("This is from server.py in set elif block")
             connection.send(echo_message.encode())
 
-        elif data.startswith("*2\r\n$3\r\nset\r\n"):
+        elif data.startswith("*2\r\n$3\r\nget\r\n"):
             echo_message=resp_parser(data)
             print(echo_message)
             connection.send(echo_message.encode())
