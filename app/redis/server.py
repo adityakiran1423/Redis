@@ -13,6 +13,6 @@ def threaded_redis_server(connection) -> None:
             echo_message=resp_parser(data)
             connection.send(echo_message.encode())
 
-        elif data.startwith("*3\r\n$3\r\nset\r\n"):
+        elif data.startswith("*3\r\n$3\r\nset\r\n"):
             echo_message=resp_parser(data)
             connection.send(echo_message.encode())
