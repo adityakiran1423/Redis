@@ -17,6 +17,7 @@ def redis_get(request_message) -> str:
 
     #value=redis_database(mode, key,"")
     if key in redis_dict:
-        return redis_dict[key]
+        # return redis_dict[key]
+        return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
     else:
         return "$-1\r\n"
