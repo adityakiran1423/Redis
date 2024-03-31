@@ -1,4 +1,4 @@
-def database(mode, key, value)-> str:
+def redis_database(mode, key, value)-> str:
     redis_dictionary={}
 
     if mode=='s':
