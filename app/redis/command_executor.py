@@ -1,4 +1,4 @@
-from database import redis_database 
+from app.redis.database import redis_database 
 
 def redis_set(request_message)-> None:
     request_message.replace("\r\n","")
