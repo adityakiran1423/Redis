@@ -1,4 +1,4 @@
-import resp_parser
+from resp_parser import resp_parser
 
 def threaded_redis_server(connection) -> None:
     while True:
