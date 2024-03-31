@@ -6,6 +6,7 @@ def redis_database(mode, key, value)-> str:
         return "okay"
     else:
         if key in redis_dictionary.keys():
-            return redis_dictionary[key]
+            get_val=redis_dictionary[key]
+            return f"${len(get_val)}\r\n\{get_val}\n\n"
         else:
-            return "error, key not found" 
+            return "$-1\r\n" 
