@@ -6,6 +6,7 @@ def threaded_redis_server(connection) -> None:
         # echo_regex="\*2+\r\n\$\d+\r\necho\r\n\$\d+\r\n[a-zA-Z0-9]+\r\n"
 
         data=connection.recv(1024).decode(encoding="utf-8")
+        
         if data=="*1\r\n$4\r\nping\r\n":
             connection.send(redis_pong_response.encode())
 
