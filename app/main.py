@@ -1,28 +1,11 @@
 import socket
 import threading
 
-
-def resp_parser(request_message) -> str:
-    #index=request_message.index("$",request_message.index("o"))
-    index=request_message.rfind("$")
-    echo_message=request_message[index:]
-    return echo_message
-
-
-def threaded_redis_server(connection) -> None:
-    while True:
-        redis_pong_response="+PONG\r\n"
-        data=connection.recv(1024).decode(encoding="utf-8")
-        if data=="*1\r\n$4\r\nping\r\n":
-            connection.send(redis_pong_response.encode())
-        else:
-            echo_message=resp_parser(data)
-            connection.send(echo_message.encode())
-
+from .redis.server import threaded_redis_server
 
 def main() -> None:
     # You can use print statements as follows for debugging, they'll be visible when running tests.
-    print("Logs from your program will appear here!")
+    # print("Logs from your program will appear here!")
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
 
