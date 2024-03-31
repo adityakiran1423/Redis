@@ -25,5 +25,5 @@ def redis_get(request_message) -> str:
     key=request_message[index2:]
     
     value=redis_database(mode, key,"")
-
+    print(value)
     return value
