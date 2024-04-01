@@ -48,8 +48,9 @@ def redis_set_with_expiry(request_message):
 
 def expiry_checker(set_time, get_time, expiry_time)->bool:
     time_delta=get_time-set_time
-    int(expiry_time)
-    
+    time_delta.total_seconds()
+    time_delta=time_delta.total_seconds()*1000
+
     if time_delta>expiry_time:
         return True
     else:
