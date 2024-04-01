@@ -12,9 +12,9 @@ def redis_set(request_message):
         set_time = datetime.now()
         set_time.strftime('%H:%M:%S.%f%z')
         redis_dict[key]=value
+        return set_time, expire_time
     else:
         redis_dict[key]=value
-    return set_time, expire_time
 
 
 def redis_get(request_message) -> str:
