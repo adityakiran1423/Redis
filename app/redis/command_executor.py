@@ -28,6 +28,8 @@ def redis_get(request_message) -> str:
         current_time = datetime.now()
         current_time.strftime('%H:%M:%S.%f%z')
         time_delta=current_time-set_time
+        time_delta.total_seconds()
+        time_delta=time_delta.total_seconds()*1000
         if time_delta>expire_time:
             del redis_dict[key]
         if key in redis_dict:
