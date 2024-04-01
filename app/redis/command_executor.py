@@ -1,6 +1,7 @@
 from app.redis.database import redis_dict, expiry_dict, set_time_dict
 
 from datetime import datetime
+import time
 
 def redis_set(request_message):
     list=request_message.split("\r\n")
@@ -50,6 +51,10 @@ def expiry_checker(set_time, get_time, expiry_time)->bool:
     time_delta=get_time-set_time
     time_delta.total_seconds()
     time_delta=time_delta.total_seconds()*1000
+
+    print(f"the time delta is {time_delta}")
+    print(f"the set time is {set_time}")
+    print(f"the get time is {get_time}")
 
     if time_delta>expiry_time:
         return True
