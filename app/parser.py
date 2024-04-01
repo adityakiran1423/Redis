@@ -12,6 +12,6 @@ def resp_parser(request_message) -> str:
 
     elif request_message.startswith("*2\r\n$3\r\nget\r\n"):
         response_message=redis_get(request_message)
-        print(response_message)
+        # print(response_message)
     
     return response_message

@@ -25,15 +25,19 @@ def redis_get(request_message) -> str:
     # if len(list)==11:\
     if request_message.startswith("*5\r\n$3\r\nset\r\n"):
         set_time, expire_time=redis_set()
+
         current_time = datetime.now()
         current_time.strftime('%H:%M:%S.%f%z')
+
         time_delta=current_time-set_time
         time_delta.total_seconds()
         time_delta=time_delta.total_seconds()*1000
+
         print(f"set_time is {set_time}")
         print(f"current_time is {current_time}")
         print(f"expiry is {expire_time}")
         print(f"time_delta is {time_delta}")
+        
         if time_delta>expire_time:
             del redis_dict[key]
         if key in redis_dict:
