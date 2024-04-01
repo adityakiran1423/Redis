@@ -37,9 +37,10 @@ def redis_get(request_message) -> str:
         print(f"current_time is {current_time}")
         print(f"expiry is {expire_time}")
         print(f"time_delta is {time_delta}")
-        
+
         if time_delta>expire_time:
             del redis_dict[key]
+            
         if key in redis_dict:
             return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
         else:
