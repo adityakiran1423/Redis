@@ -27,7 +27,7 @@ def redis_get(request_message) -> str:
     # if request_message.startswith("*3\r\n$3\r\nget\r\n"):
     #if len(list)==11:
     if key in expiry_dict:
-        set_time, expire_time=redis_set()
+        set_time, expire_time=redis_set(request_message)
         print("in starts with 5 if")
         current_time = datetime.now()
         current_time.strftime('%H:%M:%S.%f%z')
