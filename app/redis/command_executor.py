@@ -52,14 +52,18 @@ def expiry_checker(set_time, get_time, expiry_time)->bool:
     # time_delta.total_seconds()
     # time_delta=time_delta.total_seconds()*1000
 
-    time_delta.strftime('%H:%M:%S.%f%z')
+    # time_delta.strftime('%H:%M:%S.%f%z')
+    int(time_delta.total_seconds() * 1000)
+
+    int(expiry_time)
 
     print("time logs \n")
     print(f"the time delta is {time_delta}")
     print(f"the set time is {set_time}")
     print(f"the get time is {get_time}")
+    print(f"the expiry time is {expiry_time}")
 
-    if time_delta>expiry_time:
-        return True
-    else:
-        return False
+    # if time_delta>expiry_time:
+    #     return True
+    # else:
+    #     return False
