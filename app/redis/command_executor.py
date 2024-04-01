@@ -16,12 +16,8 @@ def redis_get(request_message, get_time) -> str:
     list=request_message.split("\r\n")
 
     key=list[4]
-
-    if key in redis_dict and key not in expiry_dict:
-        print("returning from main else")
-        return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
     
-    elif key in expiry_dict:
+    if key in expiry_dict:
         status=expiry_checker(set_time_dict[key], get_time, expiry_dict[key])
         if status:
             return "$-1\r\n"
@@ -29,7 +25,13 @@ def redis_get(request_message, get_time) -> str:
             if key in redis_dict:
                 print("returning from main else")
                 return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
+            else:
+                return "$-1\r\n"
             
+    elif key in redis_dict:
+        print("returning from main else")
+        return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"     
+    
     else:
         return "$-1\r\n"
 
@@ -49,10 +51,7 @@ def redis_set_with_expiry(request_message):
 
 def expiry_checker(set_time, get_time, expiry_time)->bool:
     time_delta=get_time-set_time
-    # time_delta.total_seconds()
-    # time_delta=time_delta.total_seconds()*1000
 
-    # time_delta.strftime('%H:%M:%S.%f%z')
     time_delta=int(time_delta.total_seconds() * 1000)
 
     expiry_time=int(expiry_time)
@@ -66,7 +65,7 @@ def expiry_checker(set_time, get_time, expiry_time)->bool:
     print(type(time_delta))
     print(type(expiry_time))
 
-    # if time_delta>expiry_time:
-    #     return True
-    # else:
-    #     return False
+    if time_delta>expiry_time:
+        return True
+    else:
+        return False
