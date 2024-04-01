@@ -7,6 +7,7 @@ def redis_set(request_message):
 
     key=list[4]
     value=list[6]
+
     if request_message.startswith("*5\r\n$3\r\nset\r\n"):
         expire_time=list[10]
         set_time = datetime.now()
@@ -23,7 +24,6 @@ def redis_get(request_message) -> str:
 
     key=list[4]
 
-    # if len(list)==11:\
     if request_message.startswith("*5\r\n$3\r\nset\r\n"):
         set_time, expire_time=redis_set()
 
@@ -39,15 +39,15 @@ def redis_get(request_message) -> str:
         print(f"expiry is {expire_time}")
         print(f"time_delta is {time_delta}")
 
-        expiry_handler(set_time, current_time, expire_time,key)
+        status=expiry_handler(set_time, current_time, expire_time,key)
 
-        if time_delta>expire_time:
-            del redis_dict[key]
-
-        if key in redis_dict:
-            return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
-        else:
+        if status:
             return "$-1\r\n"
+        else:
+            if key in redis_dict:
+                return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
+            else:
+                return "$-1\r\n"
 
     else:
         if key in redis_dict:
@@ -55,10 +55,14 @@ def redis_get(request_message) -> str:
         else:
             return "$-1\r\n"
 
-def expiry_handler(set_time, current_time, expire_time,key)->None:
+def expiry_handler(set_time, current_time, expire_time,key)->bool:
     time_delta=current_time-set_time
     print(f"set_time is {set_time}")
     print(f"current_time is {current_time}")
     print(f"expiry is {expire_time}")
     print(f"time_delta is {time_delta}") 
-    pass
+    if time_delta<expire_time:
+        del redis_dict[key]
+        return True
+    else:
+        return False
