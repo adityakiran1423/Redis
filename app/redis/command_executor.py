@@ -30,6 +30,10 @@ def redis_get(request_message) -> str:
         time_delta=current_time-set_time
         time_delta.total_seconds()
         time_delta=time_delta.total_seconds()*1000
+        print(f"set_time is {set_time}")
+        print(f"current_time is {current_time}")
+        print(f"expiry is {expire_time}")
+        print(f"time_delta is {time_delta}")
         if time_delta>expire_time:
             del redis_dict[key]
         if key in redis_dict:
