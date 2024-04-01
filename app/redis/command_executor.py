@@ -16,7 +16,7 @@ def redis_get(request_message, get_time) -> str:
 
     key=list[4]
 
-    if key in redis_dict:
+    if key in redis_dict and key not in expiry_dict:
         print("returning from main else")
         return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
     
