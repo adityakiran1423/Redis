@@ -1,7 +1,6 @@
 from .redis.command_executor import redis_set, redis_get
 
 def resp_parser(request_message) -> str:
-    #index=request_message.index("$",request_message.index("o"))
     if request_message.startswith("*2\r\n$4\r\necho\r\n"):
         request_message.replace("\r\n","")
         index=request_message.rfind("$")
