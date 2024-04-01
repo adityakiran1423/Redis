@@ -21,5 +21,5 @@ def threaded_redis_server(connection) -> None:
 
         elif data.startswith("*2\r\n$3\r\nget\r\n"):
             echo_message=resp_parser(data)
-            print(echo_message)
+            # print(echo_message)
             connection.send(echo_message.encode())
