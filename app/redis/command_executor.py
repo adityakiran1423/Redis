@@ -55,7 +55,7 @@ def expiry_checker(set_time, get_time, expiry_time)->bool:
     # time_delta.strftime('%H:%M:%S.%f%z')
     time_delta=int(time_delta.total_seconds() * 1000)
 
-    int(expiry_time)
+    expiry_time=int(expiry_time)
 
     print("time logs \n")
     print(f"the time delta is {time_delta}")
