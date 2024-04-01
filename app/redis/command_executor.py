@@ -61,7 +61,7 @@ def expiry_handler(set_time, current_time, expire_time,key)->bool:
     print(f"current_time is {current_time}")
     print(f"expiry is {expire_time}")
     print(f"time_delta is {time_delta}") 
-    if time_delta<expire_time:
+    if time_delta>expire_time:
         del redis_dict[key]
         return True
     else:
