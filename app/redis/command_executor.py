@@ -22,12 +22,15 @@ def redis_get(request_message) -> str:
 
     key=list[4]
 
-    if len(list)==11:
+    # if len(list)==11:\
+    if request_message.startswith("*5\r\n$3\r\nset\r\n"):
         set_time, expire_time=redis_set()
         current_time = datetime.now()
         current_time.strftime('%H:%M:%S.%f%z')
         time_delta=current_time-set_time
-        if time_delta<expire_time and key in redis_dict:
+        if time_delta>expire_time:
+            del redis_dict[key]
+        if key in redis_dict:
             return f"${len(redis_dict[key])}\r\n{redis_dict[key]}\r\n"
         else:
             return "$-1\r\n"
