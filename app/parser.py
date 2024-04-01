@@ -6,7 +6,7 @@ def resp_parser(request_message) -> str:
         index=request_message.rfind("$")
         response_message=request_message[index:]
 
-    elif request_message.startswith("*3\r\n$3\r\nset\r\n"):
+    elif request_message.startswith("*3\r\n$3\r\nset\r\n") or request_message.startswith("*5\r\n$3\r\nset\r\n"):
         response_message="+OK\r\n"
         redis_set(request_message)
 
