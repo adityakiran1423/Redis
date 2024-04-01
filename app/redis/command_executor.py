@@ -63,8 +63,8 @@ def expiry_checker(set_time, get_time, expiry_time)->bool:
     print(f"the get time is {get_time}")
     print(f"the expiry time is {expiry_time}")
 
-    type(time_delta)
-    type(expiry_time)
+    print(type(time_delta))
+    print(type(expiry_time))
 
     # if time_delta>expiry_time:
     #     return True
